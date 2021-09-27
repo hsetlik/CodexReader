@@ -2,28 +2,6 @@
 #include <QSqlQuery>
 #include <QVariant>
 
-Term::Term (CodexDatabase* db, QString target, QString translation) :
-    linkedDb(db),
-    targetStr(target),
-    ease(2.5f)
-{
-    translations.push_back(translation);
-}
-/*
-Term::Term (CodexDatabase* db, QSqlRecord rec) : linkedDb(db)
-{
-    targetStr = rec.value("target").toString();
-    ease = rec.value("ease").toDouble();
-    auto numTranslations = rec.value("numTranslations").toInt();
-    for (int i = 0; i < numTranslations; ++i)
-    {
-        QString name = "tran" + QString::number(i);
-        auto value = rec.value(name).toString();
-        translations.push_back(value);
-    }
-
-}
-*/
 
 
 CodexDatabase::CodexDatabase() :
@@ -69,16 +47,3 @@ void CodexDatabase::setUserDatabase(QString username)
     userDb.reset(new QSqlDatabase(QSqlDatabase::addDatabase(username)));
 }
 
-void CodexDatabase::addTerm(QString target, QString translation)
-{
-    /*
-    QSqlQuery query(*userDb);
-    auto command = "INSERT INTO terms(target, numTranslations, tran0, ease) VALUES(?, ?, ?)";
-    query.prepare(command);
-    query.addBindValue(target);
-    query.addBindValue(1);
-    query.addBindValue(translation);
-    query.addBindValue(2.5f);
-    query.exec();
-    */
-}

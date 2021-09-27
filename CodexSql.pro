@@ -9,21 +9,26 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    codexcontent.cpp \
     codexdatabase.cpp \
     loginform.cpp \
     main.cpp \
     mainwindow.cpp \
-    masterstackedwidget.cpp
+    masterstackedwidget.cpp \
+    userdashboard.cpp
 
 HEADERS += \
+    codexcontent.h \
     codexdatabase.h \
     loginform.h \
     mainwindow.h \
-    masterstackedwidget.h
+    masterstackedwidget.h \
+    userdashboard.h
 
 FORMS += \
     loginform.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    userdashboard.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
