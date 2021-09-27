@@ -16,6 +16,13 @@ LoginForm::~LoginForm()
 
 void LoginForm::on_login_btn_clicked()
 {
+    auto usrString = ui->usr_edit->text();
+    auto pswdString = ui->pswd_edit->text();
+    if (linkedDatabase->attemptLogin(usrString, pswdString))
+    {
+        printf ("login successful\n");
+        //TODO: emit a signal to the master view to switch to the user view
+    }
 
 }
 

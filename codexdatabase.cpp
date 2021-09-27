@@ -47,6 +47,7 @@ CodexDatabase::~CodexDatabase()
 
 bool CodexDatabase::attemptLogin(QString username, QString password)
 {
+    printf ("attempting login...\n");
     QSqlQuery query("SELECT * FROM users", *db);
     while (query.next())
     {
@@ -54,10 +55,12 @@ bool CodexDatabase::attemptLogin(QString username, QString password)
         QString pswd = query.value(1).toString();
         if (usr == username && password == pswd)
         {
+            printf ("user found\n");
             setUserDatabase(username);
             return true;
         }
     }
+    printf ("no matching user found\n");
     return false;
 }
 
