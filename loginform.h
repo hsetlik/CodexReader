@@ -16,6 +16,8 @@ public:
     explicit LoginForm(CodexDatabase* db, QWidget *parent = nullptr);
     CodexDatabase* const linkedDatabase;
     ~LoginForm();
+signals:
+    void loginWithUser(QString name);
 
 private slots:
     void on_login_btn_clicked();

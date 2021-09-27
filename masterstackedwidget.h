@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QWidget>
 #include "loginform.h"
+#include "userdashboard.h"
 
 class MasterStackedWidget : public QStackedWidget
 {
@@ -14,6 +15,10 @@ public:
 private:
     CodexDatabase database;
     LoginForm* loginForm;
+    UserDashboard* dashboard;
+private slots:
+    void goToUserDashboard(QString username);
+
 
 };
 
