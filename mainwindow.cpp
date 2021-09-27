@@ -6,6 +6,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    auto mainView = new MasterStackedWidget(this);
+    ui->verticalLayout->addWidget(mainView);
 }
 
 MainWindow::~MainWindow()

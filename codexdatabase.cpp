@@ -1,4 +1,6 @@
 #include "codexdatabase.h"
+#include <QSqlQuery>
+#include <QVariant>
 
 Term::Term (CodexDatabase* db, QString target, QString translation) :
     linkedDb(db),
@@ -45,8 +47,6 @@ CodexDatabase::~CodexDatabase()
 
 bool CodexDatabase::attemptLogin(QString username, QString password)
 {
-    //figure out how many users we have
-    /*
     QSqlQuery query("SELECT * FROM users", *db);
     while (query.next())
     {
@@ -58,8 +58,6 @@ bool CodexDatabase::attemptLogin(QString username, QString password)
             return true;
         }
     }
-    return false;
-    */
     return false;
 }
 

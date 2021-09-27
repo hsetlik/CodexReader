@@ -10,14 +10,19 @@ CONFIG += c++11
 
 SOURCES += \
     codexdatabase.cpp \
+    loginform.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    masterstackedwidget.cpp
 
 HEADERS += \
     codexdatabase.h \
-    mainwindow.h
+    loginform.h \
+    mainwindow.h \
+    masterstackedwidget.h
 
 FORMS += \
+    loginform.ui \
     mainwindow.ui
 
 # Default rules for deployment.
