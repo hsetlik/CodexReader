@@ -24,6 +24,8 @@ private slots:
 
 private:
     Ui::LoginForm *ui;
+    bool hasKeychain();
+    void setKeychain(QString username, QString password);
 };
 
 #endif // LOGINFORM_H
