@@ -11,23 +11,7 @@ LoginForm::LoginForm(CodexDatabase* db, QWidget *parent) :
     ui(new Ui::LoginForm)
 {
     ui->setupUi(this);
-    if (hasKeychain())
-    {
-        auto dir = QDir::current();
-        auto path = dir.filePath("codex_keychain.json");
-        QFile file(path);
-        file.open(QIODevice::ReadWrite);
-        QByteArray bytes = file.readAll();
-        file.close();
-        auto doc = QJsonDocument::fromJson(bytes);
-        auto obj = doc.object();
-        auto usr = obj["User"].toString();
-        auto pswd = obj["Password"].toString();
-        if (obj["UseKeychain"].toBool()
-                &&
-                linkedDatabase->attemptLogin(usr, pswd))
-            emit loginWithUser(usr);
-    }
+
 
 }
 
@@ -75,7 +59,7 @@ void LoginForm::setKeychain(QString username, QString password)
     auto dir = QDir::current();
     auto path = dir.filePath("codex_keychain.json");
     QFile file(path);
-    if (file.open(QIODevice::ReadWrite))
+    if (file.open(QIODevice::ReadWrite | QIODevice::Truncate))
     {
         QJsonObject obj;
         obj["UseKeychain"] = true;
@@ -83,6 +67,10 @@ void LoginForm::setKeychain(QString username, QString password)
         obj["Password"] = password;
         QJsonDocument doc(obj);
         file.write(doc.toJson());
+        file.close();
     }
+    else
+        printf ("file not opened\n");
+
 }
 

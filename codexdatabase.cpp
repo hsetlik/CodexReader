@@ -15,6 +15,8 @@ CodexDatabase::CodexDatabase() :
     db->setDatabaseName ("codex_vocab");
     if(db->open())
         printf ("database opened\n");
+    else
+        printf( "Error: database not opened\n");
 }
 
 CodexDatabase::~CodexDatabase()

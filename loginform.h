@@ -16,15 +16,14 @@ public:
     explicit LoginForm(CodexDatabase* db, QWidget *parent = nullptr);
     CodexDatabase* const linkedDatabase;
     ~LoginForm();
+    bool hasKeychain();
 signals:
     void loginWithUser(QString name);
 
 private slots:
     void on_login_btn_clicked();
-
 private:
     Ui::LoginForm *ui;
-    bool hasKeychain();
     void setKeychain(QString username, QString password);
 };
 
