@@ -18,8 +18,6 @@ private:
     UserDashboard* dashboard;
 private slots:
     void goToUserDashboard(QString username);
-
-
 };
 
 #endif // MASTERSTACKEDWIDGET_H

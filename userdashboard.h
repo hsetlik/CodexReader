@@ -2,7 +2,11 @@
 #define USERDASHBOARD_H
 
 #include <QWidget>
-#include "codexdatabase.h"
+#include "importview.h"
+#include "lessonview.h"
+#include "vocabview.h"
+#include "statsview.h"
+
 
 namespace Ui {
 class UserDashboard;
@@ -23,6 +27,10 @@ private slots:
 
 private:
     Ui::UserDashboard *ui;
+    ImportView* importView;
+    LessonView* lessonView;
+    VocabView* vocabView;
+    StatsView* statsView;
 };
 
 #endif // USERDASHBOARD_H
