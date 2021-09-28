@@ -13,3 +13,15 @@ LessonView::~LessonView()
 {
     delete ui;
 }
+
+void LessonView::on_viewAllButton_clicked()
+{
+
+}
+
+
+void LessonView::on_addButton_clicked()
+{
+
+}
+

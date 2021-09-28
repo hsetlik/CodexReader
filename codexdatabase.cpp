@@ -49,3 +49,14 @@ void CodexDatabase::setUserDatabase(QString username)
     userDb.reset(new QSqlDatabase(QSqlDatabase::addDatabase(username)));
 }
 
+void CodexDatabase::addTerm(QString target, QString translation)
+{
+    auto term = new Term(this, target, translation);
+    auto cmd = term->sqlInsertCommand();
+    QSqlQuery query(*userDb);
+    query.prepare(cmd);
+
+
+    delete term;
+}
+

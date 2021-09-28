@@ -17,6 +17,11 @@ public:
     CodexDatabase* const linkedDatabase;
     ~LessonView();
 
+private slots:
+    void on_viewAllButton_clicked();
+
+    void on_addButton_clicked();
+
 private:
     Ui::LessonView *ui;
 };
