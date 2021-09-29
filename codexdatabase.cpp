@@ -1,5 +1,6 @@
 #include "codexdatabase.h"
 #include <QSqlQuery>
+#include <QSqlError>
 #include <QVariant>
 #include <QPluginLoader>
 
@@ -59,15 +60,21 @@ bool CodexDatabase::attemptLogin(QString username, QString password)
 void CodexDatabase::setUserDatabase(QString username)
 {
     QSqlQuery query(db);
-    if (query.prepare("USE :dbName;"))
+    if (query.prepare("USE user_id;"))
     {
-        query.bindValue(":dbName", username);
+        query.bindValue(":user_id", username);
         if (query.exec())
             printf("User database set\n");
     }
     else
+    {
         printf("query not prepared\n");
+        auto error = query.lastError();
+        qDebug() << "Last Query:" << query.lastQuery();
+        qDebug() << "Native error code:" << error.nativeErrorCode();
+        qDebug() << "Text:" << error.text();
 
+    }
 }
 
 void CodexDatabase::addTerm(QString target, QString translation)
