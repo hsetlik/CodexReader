@@ -32,7 +32,7 @@ public:
     void addTerm(QString target, QString translation);
 private:
     void setUserDatabase(QString username);
-    std::unique_ptr<QSqlDatabase> db;
+    QSqlDatabase db;
     std::unique_ptr<QSqlDatabase> userDb;
 };
 

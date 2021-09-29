@@ -22,6 +22,8 @@ void LessonView::on_viewAllButton_clicked()
 
 void LessonView::on_addButton_clicked()
 {
-
+    auto targetStr = ui->targetEdit->text();
+    auto nativeStr = ui->translationEdit->text();
+    linkedDatabase->addTerm(targetStr, nativeStr);
 }
 
