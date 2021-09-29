@@ -10,18 +10,6 @@ CodexDatabase::CodexDatabase() :
     db (QSqlDatabase::addDatabase("QMYSQL")),
     userDb (nullptr)
 {
-    auto driverName = db.driverName().toStdString().c_str();
-    printf("Driver is: %s\n", driverName);
-    QPluginLoader loader;
-    loader.setFileName("/Users/hayden/Qt/5.15.2/clang_64/plugins/sqldrivers/libqsqlmysql");
-    if (loader.load())
-        printf("Plugin loaded\n");
-    else
-    {
-       auto errorStr = loader.errorString().toStdString();
-       printf("Failed with error: %s\n", errorStr.c_str());
-    }
-
     db.setHostName ("127.0.0.1");
     db.setUserName ("root");
     db.setPassword ("Nebuchadnezzar21");
@@ -59,28 +47,22 @@ bool CodexDatabase::attemptLogin(QString username, QString password)
 
 void CodexDatabase::setUserDatabase(QString username)
 {
-    QSqlQuery query(db);
-    if (query.prepare("USE user_id;"))
-    {
-        query.bindValue(":user_id", username);
-        if (query.exec())
-            printf("User database set\n");
-    }
+    userDb = new QSqlDatabase(QSqlDatabase::addDatabase("QMYSQL"));
+    userDb->setHostName ("127.0.0.1");
+    userDb->setUserName ("root");
+    userDb->setPassword ("Nebuchadnezzar21");
+    userDb->setDatabaseName (username);
+    if (userDb->open())
+        printf("User database opened\n");
     else
-    {
-        printf("query not prepared\n");
-        auto error = query.lastError();
-        qDebug() << "Last Query:" << query.lastQuery();
-        qDebug() << "Native error code:" << error.nativeErrorCode();
-        qDebug() << "Text:" << error.text();
+        printf("no user database!");
 
-    }
 }
 
 void CodexDatabase::addTerm(QString target, QString translation)
 {
     auto term = new Term(this, target, translation);
-    auto query = term->preparedInsertQuery(db);
+    auto query = term->preparedInsertQuery(*userDb);
     if(query.exec())
         printf ("Term added\n");
     delete term;

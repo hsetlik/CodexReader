@@ -33,7 +33,7 @@ public:
 private:
     void setUserDatabase(QString username);
     QSqlDatabase db;
-    std::unique_ptr<QSqlDatabase> userDb;
+    QSqlDatabase* userDb;
 };
 
 #endif // CODEXDATABASE_H
