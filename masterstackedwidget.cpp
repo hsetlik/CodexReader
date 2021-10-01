@@ -12,6 +12,7 @@ MasterStackedWidget::MasterStackedWidget(QWidget* parent) :
             &LoginForm::loginWithUser,
             this,
             &MasterStackedWidget::goToUserDashboard);
+
     addWidget(loginForm);
     setCurrentWidget(loginForm);
     if (loginForm->hasKeychain())
@@ -31,6 +32,7 @@ MasterStackedWidget::MasterStackedWidget(QWidget* parent) :
                 database.attemptLogin(usr, pswd))
             goToUserDashboard(usr);
     }
+
 }
 
 
@@ -39,5 +41,6 @@ void MasterStackedWidget::goToUserDashboard(QString username)
     dashboard = new UserDashboard(username, &database, this);
     addWidget(dashboard);
     setCurrentWidget(dashboard);
+     connect(dashboard->lessonView, &LessonView::startFlashCards, this, &MasterStackedWidget::startCardView);
 }
 

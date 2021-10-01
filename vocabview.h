@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "codexcontent.h"
+#include "flashcardview.h"
 namespace Ui {
 class VocabView;
 }
@@ -18,6 +19,7 @@ public:
 
 private:
     Ui::VocabView *ui;
+
 };
 
 #endif // VOCABVIEW_H

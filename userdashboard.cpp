@@ -19,6 +19,7 @@ UserDashboard::UserDashboard(QString usr, CodexDatabase* db, QWidget *parent) :
     tabWidget->insertTab(1, vocabView, "Vocab");
     tabWidget->insertTab(2, importView, "Import");
     tabWidget->insertTab(3, statsView, "Stats");
+    connect(lessonView, &LessonView::startFlashCards, this, &UserDashboard::sendFlashCardStart);
 }
 
 UserDashboard::~UserDashboard()

@@ -21,11 +21,17 @@ public:
     ~UserDashboard();
     CodexDatabase* const linkedDatabase;
     const QString username;
+signals:
+    void flashCardStart();
 
 private slots:
     void on_tabWidget_currentChanged(int index);
+    void sendFlashCardStart()
+    {
+        emit flashCardStart();
+    }
 
-private:
+public:
     Ui::UserDashboard *ui;
     ImportView* importView;
     LessonView* lessonView;

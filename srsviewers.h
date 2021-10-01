@@ -30,6 +30,7 @@ public:
     virtual void flip()=0;
 signals:
     void cardFlipped();
+protected:
     QVBoxLayout* layout;
 };
 

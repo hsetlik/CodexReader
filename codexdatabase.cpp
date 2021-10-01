@@ -33,6 +33,16 @@ Term::Term (CodexDatabase* db, QSqlRecord rec) : linkedDb(db)
     }
 }
 
+Term::Term (const Term& other) : linkedDb(other.linkedDb)
+{
+    targetStr = other.targetStr;
+    ease = other.ease;
+    reps = other.reps;
+    interval = other.interval;
+    dateDue = other.dateDue;
+    translations = other.translations;
+}
+
 // syntax:
 // INSERT INTO terms(target, numTranslations, tran0, ease, reps, delay_interval, date_due);
 // VALUES(target, numTranslations, tran0, ease, reps, delay_interval, date_due);

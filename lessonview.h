@@ -16,11 +16,14 @@ public:
     explicit LessonView(CodexDatabase* db, QWidget *parent = nullptr);
     CodexDatabase* const linkedDatabase;
     ~LessonView();
-
+signals:
+    void startFlashCards();
 private slots:
     void on_viewAllButton_clicked();
 
     void on_addButton_clicked();
+
+    void on_studyButton_clicked();
 
 private:
     Ui::LessonView *ui;

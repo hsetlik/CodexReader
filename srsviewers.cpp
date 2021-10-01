@@ -115,5 +115,4 @@ SrsViewer* ViewerFactory::viewerFor(Term* term, QWidget* parent)
     case Cloze:
         return new ClozeViewer(term, parent);
     }
-
 }

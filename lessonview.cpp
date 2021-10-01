@@ -27,3 +27,10 @@ void LessonView::on_addButton_clicked()
     linkedDatabase->addTerm(targetStr, nativeStr);
 }
 
+
+void LessonView::on_studyButton_clicked()
+{
+    emit startFlashCards();
+
+}
+

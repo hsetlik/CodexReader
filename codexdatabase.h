@@ -13,7 +13,8 @@ class Term
 public:
     Term (CodexDatabase* db, QString target, QString translation);
     Term (CodexDatabase* db, QSqlRecord rec);
-    CodexDatabase* const linkedDb;
+    Term (const Term& other);
+    CodexDatabase* linkedDb;
     QString sqlInsertCommand();
 
     QSqlQuery preparedInsertQuery(QSqlDatabase& db);
@@ -25,7 +26,6 @@ private:
     QString targetStr;
     void bindValuesToQuery(QSqlQuery& query);
     int getIntervalFor(int grade);
-
     //coeff for figuring out srs stuff
     double ease; //ease factor for algorithm
     int reps; //number of times this term has been repeated

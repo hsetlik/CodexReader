@@ -6,6 +6,7 @@
 #include <QWidget>
 #include "loginform.h"
 #include "userdashboard.h"
+#include "flashcardview.h"
 
 class MasterStackedWidget : public QStackedWidget
 {
@@ -16,8 +17,16 @@ private:
     CodexDatabase database;
     LoginForm* loginForm;
     UserDashboard* dashboard;
+    FlashCardView* cardView;
 private slots:
     void goToUserDashboard(QString username);
+    void startCardView()
+    {
+        cardView = new FlashCardView(&database, this);
+        addWidget(cardView);
+        setCurrentWidget(cardView);
+    }
+
 };
 
 #endif // MASTERSTACKEDWIDGET_H
