@@ -9,7 +9,7 @@ Term::Term (CodexDatabase* db, QString target, QString translation) :
     linkedDb(db),
     targetStr(target),
     ease(2.5f),
-    reps(0),
+    reps(1),
     interval(1),
     dateDue(QDate::currentDate())
 {
@@ -212,7 +212,8 @@ Term* CodexDatabase::getTerm(const QString& word)
 
 QString CodexDatabase::sqlSelectDueTerms()
 {
-    auto dateStr = QDate::currentDate().toString();
+    auto dateStr = QDate::currentDate().toString(Qt::DateFormat::ISODate);
+    qDebug() << dateStr;
     return "SELECT * FROM terms WHERE date_due < \'" + dateStr + "\';";
 }
 void CodexDatabase::termsDueNow(std::vector<Term>& terms)

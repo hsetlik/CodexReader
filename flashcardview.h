@@ -17,6 +17,8 @@ public:
     CodexDatabase* const linkedDatabase;
     ~FlashCardView();
     bool toNextTerm();
+    void flipCurrentCard();
+    void answerCurrentTerm(int grade);
 private slots:
     void on_ans1_clicked();
     void on_ans5_clicked();
@@ -24,9 +26,11 @@ private slots:
     void on_ans3_clicked();
     void on_ans2_clicked();
 private:
+    void keyPressEvent(QKeyEvent* event) override;
     Ui::FlashCardView *ui;
     std::vector<Term> termsToReview;
     std::unique_ptr<SrsViewer> viewer;
+    void setButtonsVisible(bool shouldBeVisible);
 
 };
 
