@@ -5,8 +5,9 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QDateTime>
-//the base data structure for words and phrases (analogous to LingQs)
+//forward declare so terms can be liked to a parent
 class CodexDatabase;
+//the base data structure for words and phrases (analogous to LingQs)
 class Term
 {
 public:
@@ -17,6 +18,9 @@ public:
 
     QSqlQuery preparedInsertQuery(QSqlDatabase& db);
     void answerSM2(int grade); // implements SuperMemo SM-2 algorithm as described https://en.wikipedia.org/wiki/SuperMemo#Description_of_SM-2_algorithm
+    bool isSingleWord() {return !targetStr.contains(' ');}
+    QString getTarget() {return targetStr; }
+    std::vector<QString> getTranslations() {return translations; }
 private:
     QString targetStr;
     void bindValuesToQuery(QSqlQuery& query);

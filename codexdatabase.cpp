@@ -186,6 +186,7 @@ std::vector<Term*> CodexDatabase::getAllTerms()
 
 Term* CodexDatabase::getTerm(const QString& word)
 {
+    //TODO: figure out whether this is fast enough and what can be done if not
     auto cmd = sqlSelectCommand(word);
     QSqlQuery query(cmd, db);
     while (query.next())

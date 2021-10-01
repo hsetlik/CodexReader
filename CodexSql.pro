@@ -17,6 +17,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     masterstackedwidget.cpp \
+    srsviewers.cpp \
     statsview.cpp \
     userdashboard.cpp \
     vocabview.cpp
@@ -29,6 +30,7 @@ HEADERS += \
     loginform.h \
     mainwindow.h \
     masterstackedwidget.h \
+    srsviewers.h \
     statsview.h \
     userdashboard.h \
     vocabview.h
