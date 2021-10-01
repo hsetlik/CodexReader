@@ -21,11 +21,13 @@ public:
     void answerSM2(int grade); // implements SuperMemo SM-2 algorithm as described https://en.wikipedia.org/wiki/SuperMemo#Description_of_SM-2_algorithm
     bool isSingleWord() {return !targetStr.contains(' ');}
     QString getTarget() {return targetStr; }
+    QSqlQuery preparedUpdateQuery(QSqlDatabase& db);
     std::vector<QString> getTranslations() {return translations; }
 private:
     QString targetStr;
     void bindValuesToQuery(QSqlQuery& query);
     int getIntervalFor(int grade);
+    void setDueAfter(int days);
     //coeff for figuring out srs stuff
     double ease; //ease factor for algorithm
     int reps; //number of times this term has been repeated
@@ -45,6 +47,7 @@ public:
     Term* getTerm(const QString& word);
     void termsDueNow(std::vector<Term>& terms);
     QString sqlSelectDueTerms();
+    QSqlDatabase& currentDatabase() {return db; }
 private:
     std::vector<Term*> getAllTerms();
     void setUserDatabase(QString username);

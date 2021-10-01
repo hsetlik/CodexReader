@@ -21,12 +21,12 @@ FlashCardView::~FlashCardView()
 
 bool FlashCardView::toNextTerm() // returns true if 1 or more due terms left
 {
+   // setFocus(Qt::ActiveWindowFocusReason);
     if (termsToReview.begin() == termsToReview.end())
         return false;
     else
     {
         viewer.reset(ViewerFactory::viewerFor(&termsToReview.front(), this));
-        termsToReview.erase(termsToReview.begin());
         return true;
     }
 }
@@ -35,7 +35,7 @@ void FlashCardView::keyPressEvent(QKeyEvent* event)
     auto key = event->key();
     if (key == Qt::Key_1)
         ui->ans1->click();
-    else if (key == Qt::Key_3)
+    else if (key == Qt::Key_2)
         ui->ans3->click();
     else if (key == Qt::Key_3)
         ui->ans3->click();
@@ -67,11 +67,17 @@ void FlashCardView::on_ans4_clicked()
 void FlashCardView::on_ans5_clicked()
 {
     answerCurrentTerm(5);
-
 }
 void FlashCardView::answerCurrentTerm(int grade)
 {
     termsToReview.front().answerSM2(grade);
+    //show the card again if the grade is too low
+    if (grade < 2)
+    {
+        auto currentFront = termsToReview.front();
+        termsToReview.push_back(currentFront);
+    }
+    termsToReview.erase(termsToReview.begin());
 }
 void FlashCardView::setButtonsVisible(bool visible)
 {
@@ -83,6 +89,7 @@ void FlashCardView::setButtonsVisible(bool visible)
 }
 void FlashCardView::flipCurrentCard()
 {
+    viewer->flip();
 
 }
 

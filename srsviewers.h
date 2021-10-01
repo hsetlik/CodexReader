@@ -21,9 +21,7 @@ class SrsViewer : public QWidget
     Q_OBJECT
 public:
     explicit SrsViewer(Term* src, QWidget *parent = nullptr);
-    virtual ~SrsViewer()
-    {
-    }
+    virtual ~SrsViewer();
     Term* const sourceTerm;
     static SrsType getSrsType(Term* term);
     //note: this always needs to emit cardFlipped();

@@ -72,6 +72,22 @@ QString Term::sqlInsertCommand()
      bindValuesToQuery(query);
      return query;
  }
+QSqlQuery Term::preparedUpdateQuery(QSqlDatabase& db)
+{
+    QSqlQuery query(db);
+    QString cmd = "UPDATE terms SET target = :target, numTranslations = :numTranslations, ";
+    for (int i = 0; i < (int)translations.size(); ++i)
+    {
+        QString tStr = "tran" + QString::number(i);
+        auto bindingStr = ":" + tStr;
+        cmd += ", ";
+    }
+    cmd += "ease = :ease, reps = :reps, delay_interval = :delay_interval, date_due = :date_due";
+    cmd += " WHERE target = :target;";
+    query.prepare(cmd);
+    bindValuesToQuery(query);
+    return query;
+}
 
  void Term::bindValuesToQuery(QSqlQuery& query)
  {
@@ -101,6 +117,10 @@ QString Term::sqlInsertCommand()
      }
      return 1;
  }
+ void Term::setDueAfter(int days)
+ {
+    dateDue = QDate::currentDate().addDays(days);
+ }
  QString CodexDatabase::sqlSelectCommand(const QString& word)
  {
      return "SELECT * FROM terms WHERE target = " + word + ";";
@@ -115,6 +135,7 @@ QString Term::sqlInsertCommand()
          reps = 0;
      auto dEase = (0.1f - (float)(5.0f - grade) * (0.08f + (float)(5 - grade) * 0.02f));
      ease += dEase;
+     setDueAfter(interval);
  }
 
 
@@ -219,7 +240,6 @@ QString CodexDatabase::sqlSelectDueTerms()
 void CodexDatabase::termsDueNow(std::vector<Term>& terms)
 {
     terms.clear();
-    //1. set up Query
     QSqlQuery query(sqlSelectDueTerms(), db);
     while (query.next())
     {

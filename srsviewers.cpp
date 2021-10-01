@@ -1,5 +1,6 @@
 #include "srsviewers.h"
 #include <QtWidgets>
+#include <QSqlQuery>
 SrsViewer::SrsViewer(Term* src, QWidget *parent) :
     QWidget(parent),
     sourceTerm(src)
@@ -7,6 +8,13 @@ SrsViewer::SrsViewer(Term* src, QWidget *parent) :
     layout = new QVBoxLayout;
     setLayout(layout);
 }
+SrsViewer::~SrsViewer()
+{
+    auto query = sourceTerm->preparedUpdateQuery(sourceTerm->linkedDb->currentDatabase());
+    if(query.exec())
+        printf ("Term updated on server\n");
+}
+
 
 SrsType SrsViewer::getSrsType(Term* term)
 {
@@ -68,6 +76,7 @@ TypeInViewer::TypeInViewer(Term* term, QWidget* parent) : SrsViewer(term, parent
     layout->addWidget(tLabel);
     editBox = new QLineEdit(this);
     layout->addWidget(editBox);
+    setFocus(Qt::ActiveWindowFocusReason);
 }
 void TypeInViewer::flip()
 {
@@ -85,7 +94,6 @@ ClozeViewer::ClozeViewer(Term* term, QWidget* parent) : SrsViewer(term, parent)
     auto allWords = fullPhrase.split(' ');
     auto clozeIdx = arc4random() % (int)(allWords.size() - 1);
     clozeWord = allWords[clozeIdx];
-    auto clozeBytes = clozeWord.toLatin1();
     auto spaceString = clozeWord;
     spaceString.fill(' ');
     fullPhrase.replace(clozeWord, spaceString);
