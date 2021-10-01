@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QWidget>
 #include <QBoxLayout>
+#include <QLineEdit>
+#include <QLabel>
 #include "codexcontent.h"
 
 //abstract base class for card viewers
@@ -45,6 +47,8 @@ class TypeInViewer : public SrsViewer
 public:
     explicit TypeInViewer(Term* term, QWidget* parent = nullptr);
     void flip() override;
+private:
+    QLineEdit* editBox;
 };
 class ClozeViewer : public SrsViewer
 {
@@ -52,9 +56,13 @@ class ClozeViewer : public SrsViewer
 public:
     explicit ClozeViewer(Term* term, QWidget* parent = nullptr);
     void flip() override;
+private:
+    QString clozeWord;
+    QLineEdit* editBox;
+    QLabel* fullLabel;
+    QLabel* userLabel;
+    QLabel* clozeLabel;
 };
-
-
 
 
 

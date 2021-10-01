@@ -11,6 +11,7 @@ CONFIG += c++11
 SOURCES += \
     codexcontent.cpp \
     codexdatabase.cpp \
+    flashcardview.cpp \
     importview.cpp \
     lessonview.cpp \
     loginform.cpp \
@@ -25,6 +26,7 @@ SOURCES += \
 HEADERS += \
     codexcontent.h \
     codexdatabase.h \
+    flashcardview.h \
     importview.h \
     lessonview.h \
     loginform.h \
@@ -36,6 +38,7 @@ HEADERS += \
     vocabview.h
 
 FORMS += \
+    flashcardview.ui \
     importview.ui \
     lessonview.ui \
     loginform.ui \

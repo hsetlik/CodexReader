@@ -57,18 +57,49 @@ void BasicViewer::flip()
 //=============================================================
 TypeInViewer::TypeInViewer(Term* term, QWidget* parent) : SrsViewer(term, parent)
 {
-
+    auto translations = sourceTerm->getTranslations();
+    QString tStr = "";
+    for (auto& t : translations)
+    {
+        tStr += t + ", ";
+    }
+    tStr.chop(2);
+    auto tLabel = new QLabel(tStr, this);
+    layout->addWidget(tLabel);
+    editBox = new QLineEdit(this);
+    layout->addWidget(editBox);
 }
 void TypeInViewer::flip()
 {
-
+    auto usrWord = editBox->text();
+    auto usrLabel = new QLabel(usrWord, this);
+    layout->removeWidget(editBox);
+    layout->addWidget(usrLabel);
+    auto targetLabel = new QLabel(sourceTerm->getTarget(), this);
+    layout->addWidget(targetLabel);
 }
 //=============================================================
 ClozeViewer::ClozeViewer(Term* term, QWidget* parent) : SrsViewer(term, parent)
 {
-
+    auto fullPhrase = sourceTerm->getTarget();
+    auto allWords = fullPhrase.split(' ');
+    auto clozeIdx = arc4random() % (int)(allWords.size() - 1);
+    clozeWord = allWords[clozeIdx];
+    auto clozeBytes = clozeWord.toLatin1();
+    auto spaceString = clozeWord;
+    spaceString.fill(' ');
+    fullPhrase.replace(clozeWord, spaceString);
+    fullLabel = new QLabel(fullPhrase, this);
+    layout->addWidget(fullLabel);
+    editBox = new QLineEdit(this);
+    layout->addWidget(editBox);
 }
 void ClozeViewer::flip()
 {
-
+    auto userStr = editBox->text();
+    layout->removeWidget(editBox);
+    userLabel = new QLabel(userStr, this);
+    clozeLabel = new QLabel(clozeWord, this);
+    layout->addWidget(userLabel);
+    layout->addWidget(clozeLabel);
 }
