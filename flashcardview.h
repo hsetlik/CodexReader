@@ -16,6 +16,7 @@ public:
     explicit FlashCardView(CodexDatabase* db, QWidget *parent = nullptr);
     CodexDatabase* const linkedDatabase;
     ~FlashCardView();
+    bool toNextTerm();
 private slots:
     void on_ans1_clicked();
     void on_ans5_clicked();
@@ -24,6 +25,8 @@ private slots:
     void on_ans2_clicked();
 private:
     Ui::FlashCardView *ui;
+    std::vector<Term> termsToReview;
+    std::unique_ptr<SrsViewer> viewer;
 
 };
 

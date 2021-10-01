@@ -200,4 +200,19 @@ Term* CodexDatabase::getTerm(const QString& word)
     return nullptr;
 }
 
-
+QString CodexDatabase::sqlSelectDueTerms()
+{
+    auto dateStr = QDate::currentDate().toString();
+    return "SELECT * FROM terms WHERE date_due < \'" + dateStr + "\';";
+}
+void CodexDatabase::termsDueNow(std::vector<Term>& terms)
+{
+    terms.clear();
+    //1. set up Query
+    QSqlQuery query(sqlSelectDueTerms(), db);
+    while (query.next())
+    {
+        Term term(this, query.record());
+        terms.push_back(term);
+    }
+}

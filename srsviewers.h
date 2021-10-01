@@ -25,7 +25,7 @@ public:
     {
     }
     Term* const sourceTerm;
-    SrsType getSrsType();
+    static SrsType getSrsType(Term* term);
     //note: this always needs to emit cardFlipped();
     virtual void flip()=0;
 signals:
@@ -64,6 +64,10 @@ private:
     QLabel* clozeLabel;
 };
 
+struct ViewerFactory
+{
+    static SrsViewer* viewerFor(Term* term, QWidget* parent=nullptr);
+};
 
 
 #endif // SRSVIEWERS_H

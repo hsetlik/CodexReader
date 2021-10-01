@@ -43,6 +43,8 @@ public:
     void addTerm(QString target, QString translation);
     QString sqlSelectCommand(const QString& word);
     Term* getTerm(const QString& word);
+    void termsDueNow(std::vector<Term>& terms);
+    QString sqlSelectDueTerms();
 private:
     std::vector<Term*> getAllTerms();
     void setUserDatabase(QString username);

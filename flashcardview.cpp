@@ -7,11 +7,23 @@ FlashCardView::FlashCardView(CodexDatabase *db, QWidget *parent) :
     ui(new Ui::FlashCardView)
 {
     ui->setupUi(this);
+    linkedDatabase->termsDueNow(termsToReview);
 }
 
 FlashCardView::~FlashCardView()
 {
     delete ui;
+}
+
+bool FlashCardView::toNextTerm() // returns true if 1 or more due terms left
+{
+    termsToReview.erase(termsToReview.begin());
+    if (termsToReview.begin() == termsToReview.end())
+        return false;
+    else
+    {
+
+    }
 }
 
 void FlashCardView::on_ans1_clicked()

@@ -8,12 +8,12 @@ SrsViewer::SrsViewer(Term* src, QWidget *parent) :
     setLayout(layout);
 }
 
-SrsType SrsViewer::getSrsType()
+SrsType SrsViewer::getSrsType(Term* term)
 {
     //seed random number generator
     std::srand(std::time(nullptr));
     float rBasic, rTypeIn, rCloze;
-    if (sourceTerm->isSingleWord()) // don't have cloze as an option for single words
+    if (term->isSingleWord()) // don't have cloze as an option for single words
     {
         rBasic = ((float) arc4random() / (float)RAND_MAX) * 0.7f;
         rTypeIn = ((float) arc4random() /(float) RAND_MAX) * 0.3f;
@@ -102,4 +102,18 @@ void ClozeViewer::flip()
     clozeLabel = new QLabel(clozeWord, this);
     layout->addWidget(userLabel);
     layout->addWidget(clozeLabel);
+}
+
+SrsViewer* ViewerFactory::viewerFor(Term* term, QWidget* parent)
+{
+    switch(SrsViewer::getSrsType(term))
+    {
+    case Basic:
+        return new BasicViewer(term, parent);
+    case TypeIn:
+        return new TypeInViewer(term, parent);
+    case Cloze:
+        return new ClozeViewer(term, parent);
+    }
+
 }
