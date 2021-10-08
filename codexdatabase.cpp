@@ -75,23 +75,35 @@ QString Term::sqlInsertCommand()
 QSqlQuery Term::preparedUpdateQuery(QSqlDatabase& db)
 {
     QSqlQuery query(db);
-    QString cmd = "UPDATE terms SET target = :target, numTranslations = :numTranslations, ";
+    QString cmd = "UPDATE terms SET numTranslations = :numTranslations, ";
     for (int i = 0; i < (int)translations.size(); ++i)
     {
         QString tStr = "tran" + QString::number(i);
         auto bindingStr = ":" + tStr;
-        cmd += ", ";
+        cmd += tStr;
+        cmd += " = " + bindingStr + ", ";
     }
-    cmd += "ease = :ease, reps = :reps, delay_interval = :delay_interval, date_due = :date_due";
-    cmd += " WHERE target = :target;";
+    cmd += "ease = :ease, reps = :reps, delay_interval = :delay_interval ";
+    cmd += "WHERE target = :target";
+    query.clear();
     query.prepare(cmd);
     bindValuesToQuery(query);
+    //auto fullQuery = query.lastQuery();
+   // qDebug() << "Bound Query: " << fullQuery;
+    auto boundValues = query.boundValues();
+    for(auto it = boundValues.begin(); it != boundValues.end(); ++it)
+    {
+        auto value = *it;
+        auto valStr = value.toString().toStdString().c_str();
+        //printf("bound value: %s\n", valStr);
+    }
     return query;
 }
 
  void Term::bindValuesToQuery(QSqlQuery& query)
  {
      query.bindValue(":target", targetStr);
+     printf("Target: %s\n", targetStr.toStdString().c_str());
      query.bindValue(":numTranslations", (int)translations.size());
      for (int i = 0; i < (int)translations.size(); ++i)
      {
@@ -99,9 +111,15 @@ QSqlQuery Term::preparedUpdateQuery(QSqlDatabase& db)
          query.bindValue(str, translations[i]);
      }
      query.bindValue(":ease", ease);
-     query.bindValue("reps", reps);
+     printf("Ease: %lf\n", ease);
+     query.bindValue(":reps", reps);
+     printf("Reps: %d\n", reps);
      query.bindValue(":delay_interval", interval);
-     query.bindValue(":date_due", dateDue);
+     printf("Interval: %d\n", interval);
+     auto dateStr = dateDue.toString(Qt::DateFormat::ISODate);
+    // printf("Date due: %s\n", dateStr.toStdString().c_str());
+     query.bindValue(":date_due", dateStr);
+     printf ("Query values bound\n");
  }
  //returns the SM-2's delay length for a certain grade without updating the term's variables
  int Term::getIntervalFor(int grade)
@@ -140,6 +158,15 @@ QSqlQuery Term::preparedUpdateQuery(QSqlDatabase& db)
 
 
 //============================================================
+void SqlUtil::setSafeMode(QSqlDatabase& db, bool isSafe)
+{
+    QString qStr = "SET SQL_SAFE_UPDATES = ";
+    if (isSafe)
+        qStr += "1;";
+    else
+        qStr += "0;";
+    QSqlQuery query(qStr, db);
+}
 
 CodexDatabase::CodexDatabase() :
     db (QSqlDatabase::addDatabase("QMYSQL")),

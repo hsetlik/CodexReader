@@ -35,6 +35,10 @@ private:
     std::vector<QString> translations;
     QDate dateDue;
 };
+struct SqlUtil
+{
+    static void setSafeMode(QSqlDatabase& db, bool isSafe);
+};
 
 class CodexDatabase
 {
@@ -48,6 +52,7 @@ public:
     void termsDueNow(std::vector<Term>& terms);
     QString sqlSelectDueTerms();
     QSqlDatabase& currentDatabase() {return db; }
+    QSqlDatabase& currentUserDatabase() {return *userDb; }
 private:
     std::vector<Term*> getAllTerms();
     void setUserDatabase(QString username);

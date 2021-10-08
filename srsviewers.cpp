@@ -1,6 +1,7 @@
 #include "srsviewers.h"
 #include <QtWidgets>
 #include <QSqlQuery>
+#include <QSqlError>
 SrsViewer::SrsViewer(Term* src, QWidget *parent) :
     QWidget(parent),
     sourceTerm(src)
@@ -10,12 +11,15 @@ SrsViewer::SrsViewer(Term* src, QWidget *parent) :
 }
 SrsViewer::~SrsViewer()
 {
-    auto query = sourceTerm->preparedUpdateQuery(sourceTerm->linkedDb->currentDatabase());
+    auto db = sourceTerm->linkedDb->currentUserDatabase();
+    SqlUtil::setSafeMode(db, false);
+    auto query = sourceTerm->preparedUpdateQuery(db);
     if(query.exec())
         printf ("Term updated on server\n");
+    else
+        qDebug() << query.lastError();
+    SqlUtil::setSafeMode(db, true);
 }
-
-
 SrsType SrsViewer::getSrsType(Term* term)
 {
     //seed random number generator
@@ -38,7 +42,6 @@ SrsType SrsViewer::getSrsType(Term* term)
             return TypeIn;
         else
             return Cloze;
-
     }
 }
 //=============================================================
@@ -111,7 +114,7 @@ void ClozeViewer::flip()
     layout->addWidget(userLabel);
     layout->addWidget(clozeLabel);
 }
-
+//=============================================================
 SrsViewer* ViewerFactory::viewerFor(Term* term, QWidget* parent)
 {
     switch(SrsViewer::getSrsType(term))
