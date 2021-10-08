@@ -108,8 +108,7 @@ QSqlQuery Term::preparedUpdateQuery(QSqlDatabase& db)
      for (int i = 0; i < (int)translations.size(); ++i)
      {
          auto str = ":tran" + QString::number(i);
-         query.bindValue(str, translations[i]);
-     }
+         query.bindValue(str, translations[i]); }
      query.bindValue(":ease", ease);
      printf("Ease: %lf\n", ease);
      query.bindValue(":reps", reps);

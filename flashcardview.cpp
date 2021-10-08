@@ -11,7 +11,6 @@ FlashCardView::FlashCardView(CodexDatabase *db, QWidget *parent) :
     linkedDatabase->termsDueNow(termsToReview);
     printf("%d terms due\n", (int)termsToReview.size());
     toNextTerm();
-    ui->viewerLayout->addWidget(viewer.get());
 }
 
 FlashCardView::~FlashCardView()
@@ -19,30 +18,40 @@ FlashCardView::~FlashCardView()
     delete ui;
 }
 
-bool FlashCardView::toNextTerm() // returns true if 1 or more due terms left
+void FlashCardView::toNextTerm() // returns true if 1 or more due terms left
 {
    // setFocus(Qt::ActiveWindowFocusReason);
     if (termsToReview.begin() == termsToReview.end())
-        return false;
+        return;
     else
     {
         viewer.reset(ViewerFactory::viewerFor(&termsToReview.front(), this));
-        return true;
+        ui->viewerLayout->addWidget(viewer.get());
     }
 }
 void FlashCardView::keyPressEvent(QKeyEvent* event)
 {
     auto key = event->key();
     if (key == Qt::Key_1)
-        ui->ans1->click();
+    {
+         ui->ans1->click();
+    }
     else if (key == Qt::Key_2)
-        ui->ans3->click();
+    {
+        ui->ans2->click();
+    }
     else if (key == Qt::Key_3)
+    {
         ui->ans3->click();
+    }
     else if (key == Qt::Key_4)
+    {
         ui->ans4->click();
+    }
     else if (key == Qt::Key_5)
+    {
         ui->ans5->click();
+    }
     else if (key == Qt::Key_Enter || key == Qt::Key_Return)
         flipCurrentCard();
 }
@@ -78,6 +87,7 @@ void FlashCardView::answerCurrentTerm(int grade)
         termsToReview.push_back(currentFront);
     }
     termsToReview.erase(termsToReview.begin());
+    toNextTerm();
 }
 void FlashCardView::setButtonsVisible(bool visible)
 {

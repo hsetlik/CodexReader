@@ -16,7 +16,7 @@ public:
     explicit FlashCardView(CodexDatabase* db, QWidget *parent = nullptr);
     CodexDatabase* const linkedDatabase;
     ~FlashCardView();
-    bool toNextTerm();
+    void toNextTerm();
     void flipCurrentCard();
     void answerCurrentTerm(int grade);
 private slots:
