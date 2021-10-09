@@ -83,27 +83,20 @@ QSqlQuery Term::preparedUpdateQuery(QSqlDatabase& db)
         cmd += tStr;
         cmd += " = " + bindingStr + ", ";
     }
-    cmd += "ease = :ease, reps = :reps, delay_interval = :delay_interval ";
+    cmd += "ease = :ease, reps = :reps, delay_interval = :delay_interval, date_due = :date_due ";
     cmd += "WHERE target = :target";
     query.clear();
     query.prepare(cmd);
     bindValuesToQuery(query);
     //auto fullQuery = query.lastQuery();
    // qDebug() << "Bound Query: " << fullQuery;
-    auto boundValues = query.boundValues();
-    for(auto it = boundValues.begin(); it != boundValues.end(); ++it)
-    {
-        auto value = *it;
-        auto valStr = value.toString().toStdString().c_str();
-        //printf("bound value: %s\n", valStr);
-    }
     return query;
 }
 
  void Term::bindValuesToQuery(QSqlQuery& query)
  {
      query.bindValue(":target", targetStr);
-     printf("Target: %s\n", targetStr.toStdString().c_str());
+     //printf("Target: %s\n", targetStr.toStdString().c_str());
      query.bindValue(":numTranslations", (int)translations.size());
      for (int i = 0; i < (int)translations.size(); ++i)
      {
@@ -136,7 +129,10 @@ QSqlQuery Term::preparedUpdateQuery(QSqlDatabase& db)
  }
  void Term::setDueAfter(int days)
  {
-    dateDue = QDate::currentDate().addDays(days);
+    auto today = QDate::currentDate();
+    qDebug() << "Current Date: " << today;
+    dateDue = today.addDays(days);
+    qDebug() << "Date Due: " << dateDue;
  }
  QString CodexDatabase::sqlSelectCommand(const QString& word)
  {
@@ -260,7 +256,7 @@ Term* CodexDatabase::getTerm(const QString& word)
 QString CodexDatabase::sqlSelectDueTerms()
 {
     auto dateStr = QDate::currentDate().toString(Qt::DateFormat::ISODate);
-    qDebug() << dateStr;
+    //qDebug() << dateStr;
     return "SELECT * FROM terms WHERE date_due < \'" + dateStr + "\';";
 }
 void CodexDatabase::termsDueNow(std::vector<Term>& terms)
@@ -272,4 +268,12 @@ void CodexDatabase::termsDueNow(std::vector<Term>& terms)
         Term term(this, query.record());
         terms.push_back(term);
     }
+}
+void CodexDatabase::updateTerm(Term* term)
+{
+    auto updateQuery = term->preparedUpdateQuery(*userDb);
+    if (updateQuery.exec())
+        printf("Term updated on Server\n");
+    else
+        qDebug() << updateQuery.lastError();
 }

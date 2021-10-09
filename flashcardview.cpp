@@ -22,7 +22,10 @@ void FlashCardView::toNextTerm() // returns true if 1 or more due terms left
 {
    // setFocus(Qt::ActiveWindowFocusReason);
     if (termsToReview.begin() == termsToReview.end())
+    {
+        emit finishStudying();
         return;
+    }
     else
     {
         viewer.reset(ViewerFactory::viewerFor(&termsToReview.front(), this));
@@ -80,13 +83,15 @@ void FlashCardView::on_ans5_clicked()
 void FlashCardView::answerCurrentTerm(int grade)
 {
     termsToReview.front().answerSM2(grade);
+    linkedDatabase->updateTerm(&termsToReview.front());
     //show the card again if the grade is too low
     if (grade < 2)
     {
         auto currentFront = termsToReview.front();
         termsToReview.push_back(currentFront);
     }
-    termsToReview.erase(termsToReview.begin());
+    if(termsToReview.size() > 0)
+        termsToReview.erase(termsToReview.begin());
     toNextTerm();
 }
 void FlashCardView::setButtonsVisible(bool visible)

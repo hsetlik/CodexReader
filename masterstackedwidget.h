@@ -20,11 +20,13 @@ private:
     FlashCardView* cardView;
 private slots:
     void goToUserDashboard(QString username);
+    void finishFlashCards();
     void startCardView()
     {
         cardView = new FlashCardView(&database, this);
         addWidget(cardView);
         setCurrentWidget(cardView);
+        connect(cardView, &FlashCardView::finishStudying, this, &MasterStackedWidget::finishFlashCards);
     }
 
 };

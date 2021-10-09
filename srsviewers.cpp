@@ -11,14 +11,6 @@ SrsViewer::SrsViewer(Term* src, QWidget *parent) :
 }
 SrsViewer::~SrsViewer()
 {
-    auto db = sourceTerm->linkedDb->currentUserDatabase();
-    SqlUtil::setSafeMode(db, false);
-    auto query = sourceTerm->preparedUpdateQuery(db);
-    if(query.exec())
-        printf ("Term updated on server\n");
-    else
-        qDebug() << query.lastError();
-    SqlUtil::setSafeMode(db, true);
 }
 SrsType SrsViewer::getSrsType(Term* term)
 {

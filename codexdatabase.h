@@ -50,6 +50,7 @@ public:
     QString sqlSelectCommand(const QString& word);
     Term* getTerm(const QString& word);
     void termsDueNow(std::vector<Term>& terms);
+    void updateTerm(Term* term);
     QString sqlSelectDueTerms();
     QSqlDatabase& currentDatabase() {return db; }
     QSqlDatabase& currentUserDatabase() {return *userDb; }

@@ -19,6 +19,8 @@ public:
     void toNextTerm();
     void flipCurrentCard();
     void answerCurrentTerm(int grade);
+signals:
+    void finishStudying();
 private slots:
     void on_ans1_clicked();
     void on_ans5_clicked();

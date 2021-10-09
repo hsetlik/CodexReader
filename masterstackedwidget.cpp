@@ -43,4 +43,8 @@ void MasterStackedWidget::goToUserDashboard(QString username)
     setCurrentWidget(dashboard);
      connect(dashboard->lessonView, &LessonView::startFlashCards, this, &MasterStackedWidget::startCardView);
 }
+void MasterStackedWidget::finishFlashCards()
+{
+    setCurrentWidget(dashboard);
+}
 
