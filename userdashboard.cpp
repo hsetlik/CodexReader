@@ -32,3 +32,15 @@ void UserDashboard::on_tabWidget_currentChanged(int index)
 
 }
 
+
+void UserDashboard::on_profileButton_clicked()
+{
+
+}
+
+
+void UserDashboard::on_settingsButton_clicked()
+{
+
+}
+

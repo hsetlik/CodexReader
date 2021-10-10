@@ -288,3 +288,18 @@ void CodexDatabase::updateTerm(Term* term)
     else
         qDebug() << updateQuery.lastError();
 }
+
+std::vector<QString> CodexDatabase::getContentNames()
+{
+    std::vector<QString> names;
+    QSqlQuery query("SELECT * FROM content;", *userDb);
+    while(query.next())
+    {
+        auto rec = query.record();
+        auto name = rec.value("content_name").toString();
+        names.push_back(name);
+    }
+
+
+    return names;
+}

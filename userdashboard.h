@@ -24,7 +24,11 @@ public:
     const QString username;
 private slots:
     void on_tabWidget_currentChanged(int index);
-    public:
+    void on_profileButton_clicked();
+
+    void on_settingsButton_clicked();
+
+public:
     Ui::UserDashboard *ui;
     ImportView* importView;
     VocabView* vocabView;

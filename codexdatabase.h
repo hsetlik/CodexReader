@@ -55,6 +55,7 @@ public:
     QSqlDatabase& currentDatabase() {return db; }
     QSqlDatabase& currentUserDatabase() {return *userDb; }
     QString fullContentText(QString name);
+    std::vector<QString> getContentNames();
 private:
     std::vector<Term*> getAllTerms();
     void setUserDatabase(QString username);
