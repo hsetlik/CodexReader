@@ -23,7 +23,7 @@ Term::Term (CodexDatabase* db, QSqlRecord rec) : linkedDb(db)
     reps = rec.value("reps").toInt();
     interval = rec.value("interval").toInt();
     dateDue = rec.value("date_due").toDate();
-    qDebug() << "Due Date is: " << dateDue;
+    //qDebug() << "Due Date is: " << dateDue;
     auto numTranslations = rec.value("numTranslations").toInt();
     for (int i = 0; i < numTranslations; ++i)
     {
@@ -268,6 +268,17 @@ void CodexDatabase::termsDueNow(std::vector<Term>& terms)
         Term term(this, query.record());
         terms.push_back(term);
     }
+}
+QString CodexDatabase::fullContentText(QString name)
+{
+    QString selectStr = "SELECT full_text FROM content WHERE content_name = " + name +";";
+    QSqlQuery query(selectStr, *userDb);
+    while (query.next())
+    {
+        auto rec = query.record();
+        return rec.value("full_text").toString();
+    }
+    return "";
 }
 void CodexDatabase::updateTerm(Term* term)
 {

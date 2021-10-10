@@ -8,17 +8,17 @@ class CodexContent : public QObject
 {
     Q_OBJECT
 public:
-    struct Transcript
+    struct FullText
     {
-        Transcript(const QString& fullText);
+        FullText(const QString& fullText);
         const QString fullSource;
-
     };
-    explicit CodexContent(CodexDatabase* db, QObject *parent = nullptr);
+    explicit CodexContent(QString contentName, CodexDatabase* db, QObject *parent = nullptr);
     CodexDatabase* const linkedDatabase;
 signals:
 private:
-    std::vector<Term*> allTerms;
+    std::vector<Term*> seenTerms;
+    std::vector<QString> newTerms; //save words that don't yet have associated terms in the DB
 
 };
 

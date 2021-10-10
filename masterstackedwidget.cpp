@@ -35,13 +35,11 @@ MasterStackedWidget::MasterStackedWidget(QWidget* parent) :
 
 }
 
-
 void MasterStackedWidget::goToUserDashboard(QString username)
 {
     dashboard = new UserDashboard(username, &database, this);
     addWidget(dashboard);
     setCurrentWidget(dashboard);
-     connect(dashboard->lessonView, &LessonView::startFlashCards, this, &MasterStackedWidget::startCardView);
 }
 void MasterStackedWidget::finishFlashCards()
 {

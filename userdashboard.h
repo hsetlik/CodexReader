@@ -3,9 +3,10 @@
 
 #include <QWidget>
 #include "importview.h"
-#include "lessonview.h"
+#include "plainflashcardaddition.h"
 #include "vocabview.h"
 #include "statsview.h"
+#include "lessonlist.h"
 
 
 namespace Ui {
@@ -21,22 +22,14 @@ public:
     ~UserDashboard();
     CodexDatabase* const linkedDatabase;
     const QString username;
-signals:
-    void flashCardStart();
-
 private slots:
     void on_tabWidget_currentChanged(int index);
-    void sendFlashCardStart()
-    {
-        emit flashCardStart();
-    }
-
-public:
+    public:
     Ui::UserDashboard *ui;
     ImportView* importView;
-    LessonView* lessonView;
     VocabView* vocabView;
     StatsView* statsView;
+    LessonList* lessonList;
 };
 
 #endif // USERDASHBOARD_H

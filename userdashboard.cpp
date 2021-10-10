@@ -7,19 +7,19 @@ UserDashboard::UserDashboard(QString usr, CodexDatabase* db, QWidget *parent) :
     username(usr),
     ui(new Ui::UserDashboard),
     importView(new ImportView(db, this)),
-    lessonView(new LessonView(db, this)),
     vocabView(new VocabView(db, this)),
-    statsView(new StatsView(db, this))
+    statsView(new StatsView(db, this)),
+    lessonList(new LessonList(db, this))
 {
     ui->setupUi(this);
     QTabWidget* tabWidget = ui->tabWidget;
     tabWidget->clear();
     //call insertTab(int index, QWidget* content, const QString& name); for each view
-    tabWidget->insertTab(0, lessonView, "Lessons");
+    tabWidget->insertTab(0, lessonList, "Lessons");
     tabWidget->insertTab(1, vocabView, "Vocab");
     tabWidget->insertTab(2, importView, "Import");
     tabWidget->insertTab(3, statsView, "Stats");
-    connect(lessonView, &LessonView::startFlashCards, this, &UserDashboard::sendFlashCardStart);
+    //connect(lessonList, &PlainFlashcardAddition::startFlashCards, this, &UserDashboard::sendFlashCardStart);
 }
 
 UserDashboard::~UserDashboard()

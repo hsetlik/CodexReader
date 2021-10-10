@@ -5,17 +5,17 @@
 #include "codexcontent.h"
 
 namespace Ui {
-class LessonView;
+class PlainFlashcardAddition;
 }
 
-class LessonView : public QWidget
+class PlainFlashcardAddition : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit LessonView(CodexDatabase* db, QWidget *parent = nullptr);
+    explicit PlainFlashcardAddition(CodexDatabase* db, QWidget *parent = nullptr);
     CodexDatabase* const linkedDatabase;
-    ~LessonView();
+    ~PlainFlashcardAddition();
 signals:
     void startFlashCards();
 private slots:
@@ -26,7 +26,7 @@ private slots:
     void on_studyButton_clicked();
 
 private:
-    Ui::LessonView *ui;
+    Ui::PlainFlashcardAddition *ui;
 };
 
 #endif // LESSONVIEW_H

@@ -54,6 +54,7 @@ public:
     QString sqlSelectDueTerms();
     QSqlDatabase& currentDatabase() {return db; }
     QSqlDatabase& currentUserDatabase() {return *userDb; }
+    QString fullContentText(QString name);
 private:
     std::vector<Term*> getAllTerms();
     void setUserDatabase(QString username);

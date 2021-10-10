@@ -13,11 +13,12 @@ SOURCES += \
     codexdatabase.cpp \
     flashcardview.cpp \
     importview.cpp \
-    lessonview.cpp \
+    lessonlist.cpp \
     loginform.cpp \
     main.cpp \
     mainwindow.cpp \
     masterstackedwidget.cpp \
+    plainflashcardaddition.cpp \
     srsviewers.cpp \
     statsview.cpp \
     userdashboard.cpp \
@@ -28,10 +29,11 @@ HEADERS += \
     codexdatabase.h \
     flashcardview.h \
     importview.h \
-    lessonview.h \
+    lessonlist.h \
     loginform.h \
     mainwindow.h \
     masterstackedwidget.h \
+    plainflashcardaddition.h \
     srsviewers.h \
     statsview.h \
     userdashboard.h \
@@ -40,9 +42,10 @@ HEADERS += \
 FORMS += \
     flashcardview.ui \
     importview.ui \
-    lessonview.ui \
+    lessonlist.ui \
     loginform.ui \
     mainwindow.ui \
+    plainflashcardaddition.ui \
     statsview.ui \
     userdashboard.ui \
     vocabview.ui
