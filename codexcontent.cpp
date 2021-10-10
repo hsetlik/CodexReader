@@ -15,9 +15,15 @@ CodexContent::FullText::FullText(const QString& fullText) :
 //===================================================================
 CodexContent::CodexContent(QString contentName, CodexDatabase* db, QObject *parent) :
     QObject(parent),
-    linkedDatabase(db)
+    linkedDatabase(db),
+    name(contentName)
 {
-    auto fullText = linkedDatabase->fullContentText(contentName);
+    auto rec = linkedDatabase->getContentRecord(name);
+    contentIdx = rec.value("content_idx").toInt();
+    hasAudio = rec.value("has_audio").toBool();
+    hasVideo = rec.value("has_video").toBool();
+    url = rec.value("url").toString();
+    auto fullText = rec.value("full_text").toString();
     auto allWords = fullText.split(' ');
     for (auto& word : allWords)
     {
@@ -29,3 +35,23 @@ CodexContent::CodexContent(QString contentName, CodexDatabase* db, QObject *pare
     }
 }
 
+
+CodexContent::CodexContent(QSqlRecord& rec, CodexDatabase* db, QObject *parent) :
+    QObject(parent),
+    linkedDatabase(db)
+{
+    contentIdx = rec.value("content_idx").toInt();
+    hasAudio = rec.value("has_audio").toBool();
+    hasVideo = rec.value("has_video").toBool();
+    url = rec.value("url").toString();
+    auto fullText = rec.value("full_text").toString();
+    auto allWords = fullText.split(' ');
+    for (auto& word : allWords)
+    {
+        auto term = linkedDatabase->getTerm(word);
+        if (term != nullptr)
+           seenTerms.push_back(term);
+        else
+            newTerms.push_back(word);
+    }
+}

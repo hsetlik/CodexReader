@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QSqlRecord>
 #include <QDateTime>
 //forward declare so terms can be liked to a parent
 class CodexDatabase;
@@ -56,6 +57,8 @@ public:
     QSqlDatabase& currentUserDatabase() {return *userDb; }
     QString fullContentText(QString name);
     std::vector<QString> getContentNames();
+    QSqlRecord getContentRecord(const QString& name);
+    std::vector<QSqlRecord> allLessonRecords();
 private:
     std::vector<Term*> getAllTerms();
     void setUserDatabase(QString username);

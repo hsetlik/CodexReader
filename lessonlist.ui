@@ -34,6 +34,17 @@
       <height>429</height>
      </rect>
     </property>
+    <widget class="QWidget" name="verticalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>-1</x>
+       <y>-1</y>
+       <width>461</width>
+       <height>701</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="contentEntryLayout"/>
+    </widget>
    </widget>
   </widget>
   <widget class="QLabel" name="label">

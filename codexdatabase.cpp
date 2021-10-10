@@ -303,3 +303,20 @@ std::vector<QString> CodexDatabase::getContentNames()
 
     return names;
 }
+QSqlRecord CodexDatabase::getContentRecord(const QString& name)
+{
+    QString qStr = "SELECT * FROM content WHERE content_name = " + name + ";";
+    QSqlQuery query(qStr, *userDb);
+    if (query.next())
+        return query.record();
+    return QSqlRecord();
+}
+std::vector<QSqlRecord> CodexDatabase::allLessonRecords()
+{
+    std::vector<QSqlRecord> records;
+    QString qStr = "SELECT * FROM content;";
+    QSqlQuery query(qStr, *userDb);
+    while (query.next())
+        records.push_back(query.record());
+    return records;
+}
