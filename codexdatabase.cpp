@@ -269,17 +269,6 @@ void CodexDatabase::termsDueNow(std::vector<Term>& terms)
         terms.push_back(term);
     }
 }
-QString CodexDatabase::fullContentText(QString name)
-{
-    QString selectStr = "SELECT full_text FROM content WHERE content_name = " + name +";";
-    QSqlQuery query(selectStr, *userDb);
-    while (query.next())
-    {
-        auto rec = query.record();
-        return rec.value("full_text").toString();
-    }
-    return "";
-}
 void CodexDatabase::updateTerm(Term* term)
 {
     auto updateQuery = term->preparedUpdateQuery(*userDb);
@@ -305,11 +294,17 @@ std::vector<QString> CodexDatabase::getContentNames()
 }
 QSqlRecord CodexDatabase::getContentRecord(const QString& name)
 {
-    QString qStr = "SELECT * FROM content WHERE content_name = " + name + ";";
-    QSqlQuery query(qStr, *userDb);
-    if (query.next())
-        return query.record();
-    return QSqlRecord();
+    QSqlQuery query("SELECT * FROM content;", *userDb);
+    while (query.next())
+    {
+        auto rec = query.record();
+        auto currentName = rec.value("content_name").toString();
+        if(currentName == name)
+        {
+            return rec;
+        }
+    }
+    return query.record();
 }
 std::vector<QSqlRecord> CodexDatabase::allLessonRecords()
 {

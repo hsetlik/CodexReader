@@ -43,7 +43,14 @@
        <height>701</height>
       </rect>
      </property>
-     <layout class="QVBoxLayout" name="contentEntryLayout"/>
+     <layout class="QVBoxLayout" name="contentEntryLayout">
+      <property name="spacing">
+       <number>2</number>
+      </property>
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMaximumSize</enum>
+      </property>
+     </layout>
     </widget>
    </widget>
   </widget>

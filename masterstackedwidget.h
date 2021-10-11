@@ -7,6 +7,7 @@
 #include "loginform.h"
 #include "userdashboard.h"
 #include "flashcardview.h"
+#include "contentreader.h"
 
 class MasterStackedWidget : public QStackedWidget
 {
@@ -18,6 +19,8 @@ private:
     LoginForm* loginForm;
     UserDashboard* dashboard;
     FlashCardView* cardView;
+    CodexContent* currentContent;
+    void loadContent(QString name);
 private slots:
     void goToUserDashboard(QString username);
     void finishFlashCards();
@@ -28,6 +31,7 @@ private slots:
         setCurrentWidget(cardView);
         connect(cardView, &FlashCardView::finishStudying, this, &MasterStackedWidget::finishFlashCards);
     }
+    void openContentBrowser(QString name);
 
 };
 

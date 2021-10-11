@@ -44,14 +44,26 @@ CodexContent::CodexContent(QSqlRecord& rec, CodexDatabase* db, QObject *parent) 
     hasAudio = rec.value("has_audio").toBool();
     hasVideo = rec.value("has_video").toBool();
     url = rec.value("url").toString();
+    qDebug() << "Content URL: " << url;
     auto fullText = rec.value("full_text").toString();
+    auto fullTextType = rec.value("full_text").type();
+    if (rec.isNull("full_text"))
+        printf("SQL Record is null!\n");
+    qDebug() << "Full Text Type: " << fullTextType;
+    qDebug() << "Full Content Text: " << fullText;
     auto allWords = fullText.split(' ');
     for (auto& word : allWords)
     {
         auto term = linkedDatabase->getTerm(word);
         if (term != nullptr)
+        {
            seenTerms.push_back(term);
+           qDebug() << "Seen Term: " << word;
+        }
         else
+        {
+            qDebug() << "New Term: " << word;
             newTerms.push_back(word);
+        }
     }
 }

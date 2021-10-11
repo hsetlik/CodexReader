@@ -6,7 +6,8 @@
 
 MasterStackedWidget::MasterStackedWidget(QWidget* parent) :
     QStackedWidget(parent),
-    loginForm(new LoginForm(&database, this))
+    loginForm(new LoginForm(&database, this)),
+    currentContent(nullptr)
 {
     connect(loginForm,
             &LoginForm::loginWithUser,
@@ -35,14 +36,29 @@ MasterStackedWidget::MasterStackedWidget(QWidget* parent) :
 
 }
 
+void MasterStackedWidget::loadContent(QString name)
+{
+    if (currentContent != nullptr)
+        delete currentContent;
+    auto rec = database.getContentRecord(name);
+    currentContent = new CodexContent(rec, &database, this);
+    printf("Content Loaded\n");
+}
 void MasterStackedWidget::goToUserDashboard(QString username)
 {
     dashboard = new UserDashboard(username, &database, this);
     addWidget(dashboard);
+    connect(dashboard->lessonList, &LessonList::openContentBrowser, this, &MasterStackedWidget::openContentBrowser);
     setCurrentWidget(dashboard);
+
 }
 void MasterStackedWidget::finishFlashCards()
 {
     setCurrentWidget(dashboard);
 }
 
+void MasterStackedWidget::openContentBrowser(QString name)
+{
+    loadContent(name);
+
+}
