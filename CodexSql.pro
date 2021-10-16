@@ -11,7 +11,6 @@ CONFIG += c++11
 SOURCES += \
     codexcontent.cpp \
     codexdatabase.cpp \
-    contentreader.cpp \
     contentreaderwidget.cpp \
     flashcardview.cpp \
     importview.cpp \
@@ -31,7 +30,6 @@ SOURCES += \
 HEADERS += \
     codexcontent.h \
     codexdatabase.h \
-    contentreader.h \
     contentreaderwidget.h \
     flashcardview.h \
     importview.h \

@@ -5,12 +5,23 @@
 #include <QDir>
 #include <QJsonDocument>
 #include <QJsonObject>
-
-CodexContent::FullText::FullText(const QString& fullText) :
+FullText::FullText(const QString& fullText) :
     fullSource(fullText)
 {
-    auto strings = fullSource.split(" ");
 
+}
+OrderedTranscript FullText::getTranscript(CodexDatabase* db)
+{
+    OrderedTranscript transcript;
+    auto strings = fullSource.split(" ");
+    for (auto& word : strings)
+    {
+        auto trm = db->getTerm(word);
+        auto pair = std::make_pair(word, trm);
+        transcript.push_back(pair);
+
+    }
+    return transcript;
 }
 //===================================================================
 CodexContent::CodexContent(QString contentName, CodexDatabase* db, QObject *parent) :
@@ -44,6 +55,7 @@ CodexContent::CodexContent(QSqlRecord& rec, CodexDatabase* db, QObject *parent) 
     hasAudio = rec.value("has_audio").toBool();
     hasVideo = rec.value("has_video").toBool();
     url = rec.value("url").toString();
+    name = rec.value("content_name").toString();
     qDebug() << "Content URL: " << url;
     auto fullText = rec.value("full_text").toString();
     auto fullTextType = rec.value("full_text").type();

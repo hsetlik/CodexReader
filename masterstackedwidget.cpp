@@ -7,7 +7,8 @@
 MasterStackedWidget::MasterStackedWidget(QWidget* parent) :
     QStackedWidget(parent),
     loginForm(new LoginForm(&database, this)),
-    currentContent(nullptr)
+    currentContent(nullptr),
+    reader(nullptr)
 {
     connect(loginForm,
             &LoginForm::loginWithUser,
@@ -67,6 +68,7 @@ void MasterStackedWidget::openContent(CodexContent* cont)
 {
    if (reader != nullptr)
        delete reader;
-   reader = new ContentReaderWidget(currentContent, this);
+   reader = new ContentReaderWidget(cont, this);
+   addWidget(reader);
    setCurrentWidget(reader);
 }

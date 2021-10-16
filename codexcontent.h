@@ -4,15 +4,21 @@
 #include <QObject>
 #include "codexdatabase.h"
 #include <unordered_map>
+typedef std::vector<std::pair<QString, Term*>> OrderedTranscript;
+class FullText
+    {
+    public:
+        FullText(const QString& fullText);
+        const QString fullSource;
+        OrderedTranscript getTranscript(CodexDatabase* db);
+private:
+        OrderedTranscript fullTranscript;
+    };
+
 class CodexContent : public QObject
 {
     Q_OBJECT
 public:
-    struct FullText
-    {
-        FullText(const QString& fullText);
-        const QString fullSource;
-    };
     explicit CodexContent(QString contentName, CodexDatabase* db, QObject *parent = nullptr);
     explicit CodexContent(QSqlRecord& rec, CodexDatabase* db, QObject *parent = nullptr);
     CodexDatabase* const linkedDatabase;

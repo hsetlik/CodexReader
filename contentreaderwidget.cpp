@@ -17,11 +17,11 @@ ContentReaderWidget::ContentReaderWidget(CodexContent* content, QWidget *parent)
         CodexLabelBase* wordLabel = nullptr;
         if (word.second != nullptr)
         {
-           wordLabel = new NewTermLabel(word.first, transcriptWidget);
+           wordLabel = new SeenTermLabel(word.second, transcriptWidget);
         }
         else
         {
-            wordLabel = new SeenTermLabel(word.second, transcriptWidget);
+            wordLabel = new NewTermLabel(word.first, transcriptWidget);
         }
         allLabels.push_back(wordLabel);
         wordLabel->move(x, y);
