@@ -24,7 +24,7 @@ void SeenTermLabel::paintEvent (QPaintEvent*)
     QPen pen(Qt::black, 1.8f, Qt::SolidLine, Qt::RoundCap, Qt::BevelJoin);
     painter.setPen(pen);
     auto textCorner = QPointF(cornerSize, cornerSize * 3.3f);
-    painter.drawText(textCorner, text());
+    painter.drawText(frameRect(), Qt::AlignLeft, text());
 }
 void SeenTermLabel::mousePressEvent(QMouseEvent* e)
 {
@@ -51,7 +51,7 @@ NewTermLabel::NewTermLabel(const QString& word, QWidget* parent) :
     CodexLabelBase(parent)
 {
     setText(word);
-    background = Qt::blue;
+    background = QColor(0, 100, 250, 100);
 }
 void NewTermLabel::paintEvent (QPaintEvent*)
 {
@@ -65,8 +65,7 @@ void NewTermLabel::paintEvent (QPaintEvent*)
     painter.drawRoundedRect(bounds, cornerSize, cornerSize);
     QPen pen(Qt::black, 1.8f, Qt::SolidLine, Qt::RoundCap, Qt::BevelJoin);
     painter.setPen(pen);
-    auto textCorner = QPointF(cornerSize, cornerSize * 3.3f);
-    painter.drawText(textCorner, text());
+    painter.drawText(frameRect(), Qt::AlignLeft, text());
 }
 void NewTermLabel::mousePressEvent(QMouseEvent* e)
 {

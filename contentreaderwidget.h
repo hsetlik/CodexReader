@@ -23,6 +23,7 @@ private:
     CodexContent* const parentContent;
     std::map<QString, Term*> transcript;
     std::vector<CodexLabelBase*> allLabels;
+    OrderedTranscript fullTranscript;
 };
 
 #endif // CONTENTREADERWIDGET_H

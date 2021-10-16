@@ -4,6 +4,7 @@
 #include <QObject>
 #include "codexdatabase.h"
 #include <unordered_map>
+#include <QVariant>
 typedef std::vector<std::pair<QString, Term*>> OrderedTranscript;
 class FullText
     {
@@ -24,6 +25,11 @@ public:
     CodexDatabase* const linkedDatabase;
     QStringList allWords();
     std::map<QString, Term*> getFullTranscript();
+    QString fullContent()
+    {
+        auto rec = linkedDatabase->getContentRecord(name);
+        return rec.value("full_text").toString();
+    }
 signals:
 private:
     QString name;

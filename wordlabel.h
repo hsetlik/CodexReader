@@ -11,7 +11,10 @@ class CodexLabelBase : public QLabel
 {
     Q_OBJECT
 public:
-    explicit CodexLabelBase(QWidget* parent = nullptr) : QLabel(parent) {}
+    explicit CodexLabelBase(QWidget* parent = nullptr) : QLabel(parent)
+    {
+       setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    }
 signals:
     void wordClicked(QString text);
 protected:

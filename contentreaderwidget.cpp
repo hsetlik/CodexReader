@@ -1,6 +1,6 @@
 #include "contentreaderwidget.h"
 #include "ui_textreader.h"
-
+#include <QtWidgets>
 ContentReaderWidget::ContentReaderWidget(CodexContent* content, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TextReader),
@@ -8,11 +8,15 @@ ContentReaderWidget::ContentReaderWidget(CodexContent* content, QWidget *parent)
     transcript(parentContent->getFullTranscript())
 {
     ui->setupUi(this);
+    auto fullText = FullText(parentContent->fullContent());
+    fullTranscript = fullText.getTranscript(parentContent->linkedDatabase);
+
     //create labels for each word
-    int x = 5;
-    int y = 5;
     auto transcriptWidget = new QWidget(this);
-    for (auto & word : transcript)
+    auto masterLayout = new QVBoxLayout;
+    auto currentLine = new QHBoxLayout;
+    int currentLineLength = 0;
+    for (auto & word : fullTranscript)
     {
         CodexLabelBase* wordLabel = nullptr;
         if (word.second != nullptr)
@@ -24,17 +28,20 @@ ContentReaderWidget::ContentReaderWidget(CodexContent* content, QWidget *parent)
             wordLabel = new NewTermLabel(word.first, transcriptWidget);
         }
         allLabels.push_back(wordLabel);
-        wordLabel->move(x, y);
-        wordLabel->show();
-        wordLabel->setAttribute(Qt::WA_DeleteOnClose);
-        x += wordLabel->width() + 2;
-        if (x >= 245)
+        currentLine->addWidget(wordLabel, wordLabel->width());
+        currentLine->setAlignment(wordLabel, Qt::AlignLeft);
+        currentLineLength += wordLabel->width() + 1;
+        if (currentLineLength > 260)
         {
-            x = 5;
-            y += wordLabel->height() + 2;
+            auto spacer = new QSpacerItem( width() - currentLineLength, wordLabel->height(), QSizePolicy::Maximum, QSizePolicy::Maximum);
+            currentLine->addSpacerItem(spacer);
+            masterLayout->addLayout(currentLine);
+            currentLine = new QHBoxLayout;
+            currentLineLength = 0;
         }
         connect(wordLabel, &CodexLabelBase::wordClicked, this, &ContentReaderWidget::termSelected);
     }
+    transcriptWidget->setLayout(masterLayout);
     ui->scrollArea->setWidget(transcriptWidget);
 }
 
