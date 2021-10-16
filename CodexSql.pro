@@ -20,10 +20,13 @@ SOURCES += \
     mainwindow.cpp \
     masterstackedwidget.cpp \
     plainflashcardaddition.cpp \
+    qtutil.cpp \
     srsviewers.cpp \
     statsview.cpp \
+    textreader.cpp \
     userdashboard.cpp \
-    vocabview.cpp
+    vocabview.cpp \
+    wordlabel.cpp
 
 HEADERS += \
     codexcontent.h \
@@ -36,10 +39,13 @@ HEADERS += \
     mainwindow.h \
     masterstackedwidget.h \
     plainflashcardaddition.h \
+    qtutil.h \
     srsviewers.h \
     statsview.h \
+    textreader.h \
     userdashboard.h \
-    vocabview.h
+    vocabview.h \
+    wordlabel.h
 
 FORMS += \
     flashcardview.ui \
@@ -49,6 +55,7 @@ FORMS += \
     mainwindow.ui \
     plainflashcardaddition.ui \
     statsview.ui \
+    textreader.ui \
     userdashboard.ui \
     vocabview.ui
 

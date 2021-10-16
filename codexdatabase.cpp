@@ -92,6 +92,11 @@ QSqlQuery Term::preparedUpdateQuery(QSqlDatabase& db)
    // qDebug() << "Bound Query: " << fullQuery;
     return query;
 }
+float Term::getNormalizedEase()
+{
+    //returns the ease adjusted for the range 0 - 1
+    return (float)(MAX_EASE / ease);
+}
 
  void Term::bindValuesToQuery(QSqlQuery& query)
  {
@@ -161,6 +166,7 @@ void SqlUtil::setSafeMode(QSqlDatabase& db, bool isSafe)
     else
         qStr += "0;";
     QSqlQuery query(qStr, db);
+    query.exec();
 }
 
 CodexDatabase::CodexDatabase() :

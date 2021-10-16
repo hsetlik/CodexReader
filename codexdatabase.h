@@ -6,6 +6,7 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QDateTime>
+#define MAX_EASE 3.5f
 //forward declare so terms can be liked to a parent
 class CodexDatabase;
 //the base data structure for words and phrases (analogous to LingQs)
@@ -24,6 +25,7 @@ public:
     QString getTarget() {return targetStr; }
     QSqlQuery preparedUpdateQuery(QSqlDatabase& db);
     std::vector<QString> getTranslations() {return translations; }
+    float getNormalizedEase();
 private:
     QString targetStr;
     void bindValuesToQuery(QSqlQuery& query);
