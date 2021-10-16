@@ -7,11 +7,23 @@
 #include <QColor>
 #include "codexcontent.h"
 //Word Statuses range from 1 (unknown) to 5 (perfect recall)
-class WordLabel : public QLabel
+class CodexLabelBase : public QLabel
 {
     Q_OBJECT
 public:
-    WordLabel(Term* term,QWidget* parent = nullptr);
+    explicit CodexLabelBase(QWidget* parent = nullptr) : QLabel(parent) {}
+signals:
+    void wordClicked(QString text);
+protected:
+    QColor background;
+
+};
+
+class SeenTermLabel : public CodexLabelBase
+{
+    Q_OBJECT
+public:
+    SeenTermLabel(Term* term,QWidget* parent = nullptr);
     Term* const parentTerm;
     void paintEvent (QPaintEvent*) override;
     void mousePressEvent(QMouseEvent* e) override;
@@ -20,12 +32,16 @@ public slots:
     void setEase(int ease);
 signals:
     void easeChanged(int ease);
-    void wordClicked(QString str);
 private:
    float ease;
-   QColor background;
-
-
+};
+class NewTermLabel : public CodexLabelBase
+{
+    Q_OBJECT
+public:
+    explicit NewTermLabel(const QString& word, QWidget* parent = nullptr);
+    void paintEvent (QPaintEvent*) override;
+    void mousePressEvent(QMouseEvent* e) override;
 
 };
 

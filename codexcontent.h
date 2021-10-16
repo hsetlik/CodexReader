@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "codexdatabase.h"
-
+#include <unordered_map>
 class CodexContent : public QObject
 {
     Q_OBJECT
@@ -16,6 +16,8 @@ public:
     explicit CodexContent(QString contentName, CodexDatabase* db, QObject *parent = nullptr);
     explicit CodexContent(QSqlRecord& rec, CodexDatabase* db, QObject *parent = nullptr);
     CodexDatabase* const linkedDatabase;
+    QStringList allWords();
+    std::map<QString, Term*> getFullTranscript();
 signals:
 private:
     QString name;

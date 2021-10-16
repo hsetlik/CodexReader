@@ -12,6 +12,7 @@ SOURCES += \
     codexcontent.cpp \
     codexdatabase.cpp \
     contentreader.cpp \
+    contentreaderwidget.cpp \
     flashcardview.cpp \
     importview.cpp \
     lessonlist.cpp \
@@ -23,7 +24,6 @@ SOURCES += \
     qtutil.cpp \
     srsviewers.cpp \
     statsview.cpp \
-    textreader.cpp \
     userdashboard.cpp \
     vocabview.cpp \
     wordlabel.cpp
@@ -32,6 +32,7 @@ HEADERS += \
     codexcontent.h \
     codexdatabase.h \
     contentreader.h \
+    contentreaderwidget.h \
     flashcardview.h \
     importview.h \
     lessonlist.h \
@@ -42,7 +43,6 @@ HEADERS += \
     qtutil.h \
     srsviewers.h \
     statsview.h \
-    textreader.h \
     userdashboard.h \
     vocabview.h \
     wordlabel.h

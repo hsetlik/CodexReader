@@ -67,3 +67,22 @@ CodexContent::CodexContent(QSqlRecord& rec, CodexDatabase* db, QObject *parent) 
         }
     }
 }
+
+QStringList CodexContent::allWords()
+{
+    auto rec = linkedDatabase->getContentRecord(name);
+    auto fullText = rec.value("full_text").toString();
+    return fullText.split(' ');
+}
+
+std::map<QString, Term*> CodexContent::getFullTranscript()
+{
+    std::map<QString, Term*> uMap;
+    auto words = allWords();
+    for (auto& word : words)
+    {
+        auto term = linkedDatabase->getTerm(word);
+        uMap[word] = term;
+    }
+    return uMap;
+}
