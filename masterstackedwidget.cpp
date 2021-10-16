@@ -43,6 +43,7 @@ void MasterStackedWidget::loadContent(QString name)
     auto rec = database.getContentRecord(name);
     currentContent = new CodexContent(rec, &database, this);
     printf("Content Loaded\n");
+    openContent(currentContent);
 }
 void MasterStackedWidget::goToUserDashboard(QString username)
 {
@@ -61,4 +62,11 @@ void MasterStackedWidget::openContentBrowser(QString name)
 {
     loadContent(name);
 
+}
+void MasterStackedWidget::openContent(CodexContent* cont)
+{
+   if (reader != nullptr)
+       delete reader;
+   reader = new ContentReaderWidget(currentContent, this);
+   setCurrentWidget(reader);
 }

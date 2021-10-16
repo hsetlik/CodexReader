@@ -16,6 +16,8 @@ public:
     ~ContentReaderWidget();
 public slots:
     void termSelected(QString term);
+signals:
+    void termToDictionary(QString term);
 private:
     Ui::TextReader *ui;
     CodexContent* const parentContent;

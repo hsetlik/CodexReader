@@ -20,7 +20,9 @@ ContentReaderWidget::ContentReaderWidget(CodexContent* content, QWidget *parent)
            wordLabel = new NewTermLabel(word.first, transcriptWidget);
         }
         else
+        {
             wordLabel = new SeenTermLabel(word.second, transcriptWidget);
+        }
         allLabels.push_back(wordLabel);
         wordLabel->move(x, y);
         wordLabel->show();
@@ -31,6 +33,7 @@ ContentReaderWidget::ContentReaderWidget(CodexContent* content, QWidget *parent)
             x = 5;
             y += wordLabel->height() + 2;
         }
+        connect(wordLabel, &CodexLabelBase::wordClicked, this, &ContentReaderWidget::termSelected);
     }
     ui->scrollArea->setWidget(transcriptWidget);
 }
@@ -38,4 +41,9 @@ ContentReaderWidget::ContentReaderWidget(CodexContent* content, QWidget *parent)
 ContentReaderWidget::~ContentReaderWidget()
 {
     delete ui;
+}
+
+void ContentReaderWidget::termSelected(QString term)
+{
+    emit termToDictionary(term);
 }
