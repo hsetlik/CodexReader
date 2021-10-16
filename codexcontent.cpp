@@ -13,7 +13,8 @@ FullText::FullText(const QString& fullText) :
 OrderedTranscript FullText::getTranscript(CodexDatabase* db)
 {
     OrderedTranscript transcript;
-    auto strings = fullSource.split(" ");
+    auto exp = QRegExp("\\s+");
+    auto strings = fullSource.split(exp);
     for (auto& word : strings)
     {
         auto trm = db->getTerm(word);

@@ -52,5 +52,6 @@ ContentReaderWidget::~ContentReaderWidget()
 
 void ContentReaderWidget::termSelected(QString term)
 {
+    qDebug() << "Term Selected: " << term;
     emit termToDictionary(term);
 }
