@@ -13,7 +13,7 @@ class CodexLabelBase : public QLabel
 public:
     explicit CodexLabelBase(QWidget* parent = nullptr) : QLabel(parent)
     {
-       setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+       //setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
     }
 signals:
     void wordClicked(QString text);

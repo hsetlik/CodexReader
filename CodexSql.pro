@@ -12,6 +12,7 @@ SOURCES += \
     codexcontent.cpp \
     codexdatabase.cpp \
     contentreaderwidget.cpp \
+    dictionarywidget.cpp \
     flashcardview.cpp \
     importview.cpp \
     lessonlist.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     codexcontent.h \
     codexdatabase.h \
     contentreaderwidget.h \
+    dictionarywidget.h \
     flashcardview.h \
     importview.h \
     lessonlist.h \
@@ -46,6 +48,7 @@ HEADERS += \
     wordlabel.h
 
 FORMS += \
+    dictionarywidget.ui \
     flashcardview.ui \
     importview.ui \
     lessonlist.ui \

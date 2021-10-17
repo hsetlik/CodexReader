@@ -7,6 +7,7 @@ ContentReaderWidget::ContentReaderWidget(CodexContent* content, QWidget *parent)
     parentContent(content),
     transcript(parentContent->getFullTranscript())
 {
+    const int readerWidth = 250;
     ui->setupUi(this);
     auto fullText = FullText(parentContent->fullContent());
     fullTranscript = fullText.getTranscript(parentContent->linkedDatabase);
@@ -27,18 +28,20 @@ ContentReaderWidget::ContentReaderWidget(CodexContent* content, QWidget *parent)
         {
             wordLabel = new NewTermLabel(word.first, transcriptWidget);
         }
+        wordLabel->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
         allLabels.push_back(wordLabel);
-        currentLine->addWidget(wordLabel, wordLabel->width());
+        currentLine->addWidget(wordLabel);
         currentLine->setAlignment(wordLabel, Qt::AlignLeft);
-        currentLineLength += wordLabel->width() + 1;
-        if (currentLineLength > 260)
+        if (currentLineLength > readerWidth)
         {
-            auto spacer = new QSpacerItem( width() - currentLineLength, wordLabel->height(), QSizePolicy::Maximum, QSizePolicy::Maximum);
-            currentLine->addSpacerItem(spacer);
+            qDebug() << "Line Length: " << currentLineLength;
+            //currentLine->addSpacing(width() - currentLineLength);
             masterLayout->addLayout(currentLine);
             currentLine = new QHBoxLayout;
             currentLineLength = 0;
         }
+        qDebug() << "Label: " << wordLabel->text() << " has width: " << wordLabel->width();
+        currentLineLength += wordLabel->width() + 1;
         connect(wordLabel, &CodexLabelBase::wordClicked, this, &ContentReaderWidget::termSelected);
     }
     transcriptWidget->setLayout(masterLayout);
